@@ -30,7 +30,7 @@ How To Use:
 [Confluent-Kafka](https://docs.confluent.io/).
 [Confluent-Plugin](https://www.confluent.io/hub/).  
 To Add Confluent connector plugin:  
-in `cp-kafka-connect` in `build.sh` script add connector plugin installer for example:
+in `cp-kafka-connect` in `build.sh` script add connector plugin installer for example:  
 `confluent-hub install --no-prompt jcustenborder/kafka-connect-json-schema:0.2.5`
 
 
