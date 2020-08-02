@@ -1,12 +1,12 @@
 version: '3.3'
 services: 
-    netflometer:
+    netflowmeter:
         image: ryuk4/netflowmqtt-image:latest
         hostname: netflowmeter
         container_name: netflowmeter
         network_mode: host
         env_file: 
-            - ./netflometer/netflometer.env
+            - ./netflowmeter/netflowmeter.env
 
     snort:
         image: mataelang/snorqttalpine-sensor
