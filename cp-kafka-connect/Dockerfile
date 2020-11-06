@@ -1,5 +1,5 @@
-FROM confluentinc/cp-kafka-connect:5.5.1
+FROM confluentinc/cp-kafka-connect:6.0.0
 
-COPY build.sh /root
+COPY build.sh .
 
-RUN sh /root/build.sh && rm -f /root/build.sh
+RUN sh ~/build.sh && rm -f ~/build.sh
