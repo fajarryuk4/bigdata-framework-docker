@@ -1,7 +1,7 @@
 version: '3.3'
 services: 
     netflowmeter:
-        image: ryuk4/netflowmqtt-image:latest
+        image: ryuk4/netflowmqtt-sensor:latest
         hostname: netflowmeter
         container_name: netflowmeter
         network_mode: host
