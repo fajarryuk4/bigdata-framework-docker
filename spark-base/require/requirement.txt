@@ -1,0 +1,5 @@
+pymongo
+fastavro
+python-schema-registry-client
+confluent-kafka
+tinydb
