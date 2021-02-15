@@ -7,17 +7,6 @@ services:
         network_mode: host
         env_file: 
             - ./netflowmeter/netflowmeter.env
-
-    snort:
-        image: mataelang/snorqttalpine-sensor
-        hostname: snort
-        container_name: snort
-        network_mode: host
-        volumes: 
-            - /etc/localtime:/etc/localtime
-            - /etc/timezone:/etc/timezone
-        env_file:
-            - ./snort/snort.env
     
     mosquitto:
         image: eclipse-mosquitto
