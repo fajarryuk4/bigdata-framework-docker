@@ -6,7 +6,7 @@ services:
         container_name: netflowmeter
         network_mode: host
         env_file: 
-            - ./netflowmeter/netflowmeter.env
+            - ./envfile/netflowmeter.env
     
     mosquitto:
         image: eclipse-mosquitto
@@ -68,7 +68,7 @@ services:
 
     connect:
         build: 
-            context: ./cp-kafka-connect
+            context: ./dokerfiles/cp-kafka-connect
             dockerfile: Dockerfile
         image: cp-kafka-connect:latest
         hostname: connect
@@ -113,7 +113,6 @@ services:
             - broker
             - schema-registry
             - connect
-            - ksqldb-server
         ports:
             - "9021:9021"
         environment:
@@ -131,7 +130,7 @@ services:
 
     spark-base:
         build: 
-            context: ./spark-base
+            context: ./dokerfiles/spark-base
             dockerfile: Dockerfile
         image: spark-base:latest
         hostname: spark
