@@ -6,28 +6,15 @@ services:
         container_name: netflowmeter
         network_mode: host
         env_file: 
-            - ./netflowmeter/netflowmeter.env
-
-    snort:
-        image: mataelang/snorqttalpine-sensor
-        hostname: snort
-        container_name: snort
-        network_mode: host
-        volumes: 
-            - /etc/localtime:/etc/localtime
-            - /etc/timezone:/etc/timezone
-        env_file:
-            - ./snort/snort.env
+            - ./envfile/netflowmeter.env
     
     mosquitto:
         image: eclipse-mosquitto
         hostname: mosquitto
         container_name: mosquitto
+        network_mode: 'host'
         ports: 
             - "1883:1883"
-        volumes: 
-            - ./mosquitto:/mosquitto/
-        network_mode: 'host'
 
     zookeeper:
         image: confluentinc/cp-zookeeper:6.0.0
@@ -79,7 +66,7 @@ services:
 
     connect:
         build: 
-            context: ./cp-kafka-connect
+            context: ./dockerfiles/cp-kafka-connect
             dockerfile: Dockerfile
         image: cp-kafka-connect:latest
         hostname: connect
@@ -124,7 +111,6 @@ services:
             - broker
             - schema-registry
             - connect
-            - ksqldb-server
         ports:
             - "9021:9021"
         environment:
@@ -140,77 +126,9 @@ services:
             CONFLUENT_METRICS_TOPIC_REPLICATION: 1
             PORT: 9021
 
-    ksqldb-server:
-        image: confluentinc/cp-ksqldb-server:6.0.0
-        hostname: ksqldb-server
-        container_name: ksqldb-server
-        depends_on:
-            - broker
-            - connect
-        ports:
-            - "8088:8088"
-        environment:
-            KSQL_CONFIG_DIR: "/etc/ksql"
-            KSQL_BOOTSTRAP_SERVERS: "broker:29092"
-            KSQL_HOST_NAME: ksqldb-server
-            KSQL_LISTENERS: "http://0.0.0.0:8088"
-            KSQL_CACHE_MAX_BYTES_BUFFERING: 0
-            KSQL_KSQL_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
-            KSQL_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
-            KSQL_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
-            KSQL_KSQL_CONNECT_URL: "http://connect:8083"
-
-    ksqldb-cli:
-        image: confluentinc/cp-ksqldb-cli:6.0.0
-        container_name: ksqldb-cli
-        depends_on:
-            - broker
-            - connect
-            - ksqldb-server
-        entrypoint: /bin/sh
-        tty: true
-
-    ksql-datagen:
-        image: confluentinc/ksqldb-examples:6.0.0
-        hostname: ksql-datagen
-        container_name: ksql-datagen
-        depends_on:
-            - ksqldb-server
-            - broker
-            - schema-registry
-            - connect
-        command: "bash -c 'echo Waiting for Kafka to be ready... && \
-                        cub kafka-ready -b broker:29092 1 40 && \
-                        echo Waiting for Confluent Schema Registry to be ready... && \
-                        cub sr-ready schema-registry 8081 40 && \
-                        echo Waiting a few seconds for topic creation to finish... && \
-                        sleep 11 && \
-                        tail -f /dev/null'"
-        environment:
-            KSQL_CONFIG_DIR: "/etc/ksql"
-            STREAMS_BOOTSTRAP_SERVERS: broker:29092
-            STREAMS_SCHEMA_REGISTRY_HOST: schema-registry
-            STREAMS_SCHEMA_REGISTRY_PORT: 8081
-
-    rest-proxy:
-        image: confluentinc/cp-kafka-rest:6.0.0
-        depends_on:
-            - zookeeper
-            - broker
-            - schema-registry
-        ports:
-            - 8082:8082
-        hostname: rest-proxy
-        container_name: rest-proxy
-        environment:
-            KAFKA_REST_HOST_NAME: rest-proxy
-            KAFKA_REST_BOOTSTRAP_SERVERS: 'broker:29092'
-            KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
-            KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
-
     spark-base:
         build: 
-            context: ./spark-base
+            context: ./dockerfiles/spark-base
             dockerfile: Dockerfile
         image: spark-base:latest
         hostname: spark
