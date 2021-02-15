@@ -15,14 +15,15 @@ echo ----------------------------------------------------------
 echo -e "\n"
 
 echo "Available Network Interface : `ls -C /sys/class/net`"
-read -p "Network Interface for Tapping: " NETINT
+echo "Network Interface Card for Tapping (ex: eth0)"
+read -p "Your Choice: " NETINT
 
 ip4=$(/sbin/ip -o -4 addr list $NETINT | awk '{print $4}' | cut -d/ -f1)
 
 sed -i 's/^NETINT=.*/NETINT='$NETINT'/' envfile/netflowmeter.env
 sed -i 's/^MQTT_HOST=.*/MQTT_HOST='$ip4'/' envfile/netflowmeter.env
 
-echo -----------------------------------\
+echo "-----------------------------------\ "
 echo "Starting Compose BigData..."
 /usr/bin/docker-compose up -d
 
@@ -35,7 +36,7 @@ sed -i 's|tcp://.*|tcp://'$ip4':1883",|' connector-config/nfm-connector.json
 while [ "$( docker container inspect -f '{{.State.Running}}' $container_name )" == "true" ];
 do
   for (( i=0; i<${#chars}; i++ )); do
-    sleep 0.01
+    sleep 0.05
     echo -en "Configuring Kafka Connector...[${chars:$i:1}]" "\r"
   done
 
