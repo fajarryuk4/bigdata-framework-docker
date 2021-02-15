@@ -1,4 +1,4 @@
-FROM jupyter/all-spark-notebook
+FROM jupyter/all-spark-notebook:latest
 
 COPY require .
 
