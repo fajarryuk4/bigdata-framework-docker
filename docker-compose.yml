@@ -15,8 +15,6 @@ services:
         network_mode: 'host'
         ports: 
             - "1883:1883"
-        volumes: 
-            - ./mosquitto:/mosquitto/
 
     zookeeper:
         image: confluentinc/cp-zookeeper:6.0.0
@@ -68,7 +66,7 @@ services:
 
     connect:
         build: 
-            context: ./dokerfiles/cp-kafka-connect
+            context: ./dockerfiles/cp-kafka-connect
             dockerfile: Dockerfile
         image: cp-kafka-connect:latest
         hostname: connect
@@ -130,7 +128,7 @@ services:
 
     spark-base:
         build: 
-            context: ./dokerfiles/spark-base
+            context: ./dockerfiles/spark-base
             dockerfile: Dockerfile
         image: spark-base:latest
         hostname: spark
