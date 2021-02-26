@@ -6,7 +6,7 @@ if [ "$EUID" -ne 0 ]
 fi
 
 command -v docker >/dev/null 2>&1 || { echo >&2 "This service requires Docker, but your computer doesn't have it. Install Docker then try again. Aborting."; exit 1; }
-
+command -v ifconfig >/dev/null 2>&1 || { echo >&2 "This service requires net-tools, but your computer doesn't have it. Install net-tools then try again. Aborting."; exit 1; }
 
 echo -e "\n"
 echo ----------------------------------------------------------
@@ -20,7 +20,8 @@ echo "Available Network Interface : `ls -C /sys/class/net`"
 echo "Network Interface Card for Tapping (ex: eth0)"
 read -p "Your Choice: " NETINT
 
-ip4=$( /sbin/ip -o -4 addr list $NETINT | awk '{print $4}' | cut -d/ -f1 )
+# ip4=$( /sbin/ip -o -4 addr list $NETINT | awk '{print $4}' | cut -d/ -f1 )
+ip4=$(ifconfig $NETINT | egrep -o 'inet [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'  | cut -d' ' -f2)
 
 sed -i 's/^NETINT=.*/NETINT='$NETINT'/' envfile/netflowmeter.env
 sed -i 's/^MQTT_HOST=.*/MQTT_HOST='$ip4'/' envfile/netflowmeter.env
