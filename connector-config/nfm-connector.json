@@ -9,7 +9,7 @@
         "connect.mqtt.keep.alive" : "1000",
         "connect.mqtt.client.id" : "nfm_kafka_subcriber",
         "connect.mqtt.converter.throw.on.error" : "true",
-        "connect.mqtt.hosts" : "tcp://10.212.71.255:1883",
+        "connect.mqtt.hosts" : "tcp://172.18.0.1:1883",
         "connect.mqtt.service.quality" : "1"
     }
 }
