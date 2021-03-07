@@ -46,6 +46,7 @@ sed -i 's/^MQTT_HOST=.*/MQTT_HOST='$ip4'/' envfile/netflowmeter.env
 #Allow mqqt in firewall
 echo -e "\nAdding rule for MQTT transfer file"
 ufw allow 1883
+ufw allow 2181
 
 #Starting Big Data
 echo -e "\n-----------------------------------\ "
@@ -72,9 +73,6 @@ do
   then
     curl -s -X POST -H 'Content-Type: application/json' --data @connector-config/nfm-connector.json http://localhost:8083/connectors
     break;
-  else
-    docker-compose down
-    exit 1;
   fi
   
 done
