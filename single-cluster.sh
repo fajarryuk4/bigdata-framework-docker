@@ -8,12 +8,12 @@ fi
 
 #Requirement checker
 command -v docker >/dev/null 2>&1 || { echo >&2 "This service requires Docker, but your computer doesn't have it. Install Docker then try again. Aborting."; exit 1; }
-command -v docker-compose >/dev/null 2>&1 || { echo >&2 "Need Some Requirement... \n Installing Docker-Compose\n"; exit 1;}
-command -v ifconfig >/dev/null 2>&1 || { echo >&2 "Need Some Requirement... \n Installing Net-Tools\n"; exit 1; }
+command -v docker-compose >/dev/null 2>&1 || { echo >&2 "This service requires Docker-Compose, but your computer doesn't have it. Install Docker-Compose then try again. Aborting."; exit 1;}
+command -v ifconfig >/dev/null 2>&1 || { echo >&2 "This service requires Net-Tools, but your computer doesn't have it. Install Net-Tools then try again. Aborting."; exit 1; }
 
-echo -e "\n"
 #Opening
 printf '
+ __  __    _  _____  _       _____ _        _    _   _  ____    _        _    ____
 |  \/  |  / \|_   _|/ \     | ____| |      / \  | \ | |/ ___|  | |      / \  | __ )
 | |\/| | / _ \ | | / _ \    |  _| | |     / _ \ |  \| | |  _   | |     / _ \ |  _ \
 | |  | |/ ___ \| |/ ___ \   | |___| |___ / ___ \| |\  | |_| |  | |___ / ___ \| |_) |
@@ -45,8 +45,7 @@ sed -i 's/^MQTT_HOST=.*/MQTT_HOST='$ip4'/' envfile/netflowmeter.env
 
 #Allow mqqt in firewall
 echo -e "\nAdding rule for MQTT transfer file"
-ufw allow 1883
-ufw allow 2181
+ufw allow 1883 
 
 #Starting Big Data
 echo -e "\n-----------------------------------\ "
@@ -74,7 +73,6 @@ do
     curl -s -X POST -H 'Content-Type: application/json' --data @connector-config/nfm-connector.json http://localhost:8083/connectors
     break;
   fi
-  
 done
 
 #Display Jupyter Token
