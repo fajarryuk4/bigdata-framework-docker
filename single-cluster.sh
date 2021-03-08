@@ -10,7 +10,7 @@ fi
 command -v docker >/dev/null 2>&1 || { echo >&2 "This service requires Docker, but your computer doesn't have it. Install Docker then try again. Aborting."; exit 1; }
 command -v docker-compose >/dev/null 2>&1 || { echo >&2 "This service requires Docker-Compose, but your computer doesn't have it. Install Docker-Compose then try again. Aborting."; exit 1;}
 command -v ifconfig >/dev/null 2>&1 || { echo >&2 "This service requires Net-Tools, but your computer doesn't have it. Install Net-Tools then try again. Aborting."; exit 1; }
-command -v mosquitto >/dev/null 2>&1 || { echo >&2 "This service requires Mosquitto, but your computer doesn't have it. Install Mosquitto then try again. Aborting."; exit 1; }
+command -v mosquitto >/dev/null 2>&1 || { echo >&2 "This service requires Mosquitto Broker, but your computer doesn't have it. Install Mosquitto Broker then try again. Aborting."; exit 1; }
 
 #Opening
 printf '
@@ -86,7 +86,7 @@ echo -e "\nSave The Token"
 echo -e "If you forgot the token, you can access token by running command\n\tdocker exec -it spark-base bash -c 'jupyter notebook list'"
 
 echo -e "\n\n-----------------------------------"
-echo -e "Setup completed."
+echo -e "${YELLOW}Setup completed.${NC}"
 echo -e "-----------------------------------"
 
 echo -e "You can start/stop/restart the bigdata-framework now by the heading to folder project and using command : 
