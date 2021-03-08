@@ -103,10 +103,6 @@ This is an example of how to list things you need to use the software and how to
   ```sh
   sudo apt-get install mosquitto
   ```
-* Mosquitto Client
-  ```sh
-  sudo apt-get install mosquitto-clients
-  ```
 * Net-Tools
   ```sh
   sudo apt-get install net-Tools
@@ -163,7 +159,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Muhamad Fajar Mukti - [Student Mail](fajarmukti180@student.pens.ac.id)
+Muhamad Fajar Mukti - fajarmukti180@it.student.pens.ac.id
 
 Project Link: [https://github.com/fajarryuk4/bigdata-framework-docker](https://github.com/fajarryuk4/bigdata-framework-docker)
 
