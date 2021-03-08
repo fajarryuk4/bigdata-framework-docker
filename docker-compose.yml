@@ -8,14 +8,6 @@ services:
         env_file: 
             - ./envfile/netflowmeter.env
     
-    mosquitto:
-        image: eclipse-mosquitto
-        hostname: mosquitto
-        container_name: mosquitto
-        network_mode: 'host'
-        ports: 
-            - "1883:1883"
-  
     zookeeper:
         image: confluentinc/cp-zookeeper:6.1.0
         hostname: zookeeper
@@ -94,43 +86,43 @@ services:
             CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
 
     # Original Confluent Web-GUI
-    # control-center:
-    #     image: confluentinc/cp-enterprise-control-center:6.1.0
-    #     hostname: control-center
-    #     container_name: control-center
-    #     depends_on:
-    #     - broker
-    #     - schema-registry
-    #     - connect
-    #     ports:
-    #     - "9021:9021"
-    #     environment:
-    #         CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
-    #         CONTROL_CENTER_CONNECT_CLUSTER: 'connect:8083'
-    #         CONTROL_CENTER_KSQL_KSQLDB1_URL: "http://ksqldb-server:8088"
-    #         CONTROL_CENTER_KSQL_KSQLDB1_ADVERTISED_URL: "http://localhost:8088"
-    #         CONTROL_CENTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
-    #         CONTROL_CENTER_REPLICATION_FACTOR: 1
-    #         CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
-    #         CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
-    #         CONFLUENT_METRICS_TOPIC_REPLICATION: 1
-    #         PORT: 9021
-
-    #Open Source Web-GUI (need to Improve from Developer)
     control-center:
-        image: provectuslabs/kafka-ui
+        image: confluentinc/cp-enterprise-control-center:6.1.0
+        hostname: control-center
         container_name: control-center
         depends_on:
-            - broker
-            - schema-registry
-            - connect
+        - broker
+        - schema-registry
+        - connect
         ports:
-            - "9021:8080"
+        - "9021:9021"
         environment:
-            KAFKA_CLUSTERS_0_NAME: 'MataElangLab'
-            KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'broker:29092'
-            KAFKA_CLUSTERS_0_ZOOKEEPER: 'zookeeper:2181'
-            KAFKA_CLUSTERS_0_SCHEMAREGISTRY: 'http://schema-registry:8081'
+            CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
+            CONTROL_CENTER_CONNECT_CLUSTER: 'connect:8083'
+            CONTROL_CENTER_KSQL_KSQLDB1_URL: "http://ksqldb-server:8088"
+            CONTROL_CENTER_KSQL_KSQLDB1_ADVERTISED_URL: "http://localhost:8088"
+            CONTROL_CENTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
+            CONTROL_CENTER_REPLICATION_FACTOR: 1
+            CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
+            CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
+            CONFLUENT_METRICS_TOPIC_REPLICATION: 1
+            PORT: 9021
+
+    #Open Source Web-GUI (need to Improve from Developer)
+    # control-center:
+    #     image: provectuslabs/kafka-ui
+    #     container_name: control-center
+    #     depends_on:
+    #         - broker
+    #         - schema-registry
+    #         - connect
+    #     ports:
+    #         - "9021:8080"
+    #     environment:
+    #         KAFKA_CLUSTERS_0_NAME: 'MataElangLab'
+    #         KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'broker:29092'
+    #         KAFKA_CLUSTERS_0_ZOOKEEPER: 'zookeeper:2181'
+    #         KAFKA_CLUSTERS_0_SCHEMAREGISTRY: 'http://schema-registry:8081'
 
     spark-base:
         build: 

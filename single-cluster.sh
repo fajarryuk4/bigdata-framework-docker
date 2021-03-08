@@ -10,6 +10,7 @@ fi
 command -v docker >/dev/null 2>&1 || { echo >&2 "This service requires Docker, but your computer doesn't have it. Install Docker then try again. Aborting."; exit 1; }
 command -v docker-compose >/dev/null 2>&1 || { echo >&2 "This service requires Docker-Compose, but your computer doesn't have it. Install Docker-Compose then try again. Aborting."; exit 1;}
 command -v ifconfig >/dev/null 2>&1 || { echo >&2 "This service requires Net-Tools, but your computer doesn't have it. Install Net-Tools then try again. Aborting."; exit 1; }
+command -v mosquitto >/dev/null 2>&1 || { echo >&2 "This service requires Mosquitto, but your computer doesn't have it. Install Mosquitto then try again. Aborting."; exit 1; }
 
 #Opening
 printf '
@@ -43,13 +44,16 @@ ip4=$(ifconfig $NETINT | egrep -o 'inet [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9
 sed -i 's/^NETINT=.*/NETINT='$NETINT'/' envfile/netflowmeter.env
 sed -i 's/^MQTT_HOST=.*/MQTT_HOST='$ip4'/' envfile/netflowmeter.env
 
+#Running MQTT
+systemctl start mosquitto
+
 #Allow mqqt in firewall
 echo -e "\nAdding rule for MQTT transfer file"
 ufw allow 1883 
 
 #Starting Big Data
-echo -e "\n-----------------------------------\ "
-echo "Starting Compose BigData..."
+echo -e "\nStarting Compose BigData..."
+echo "-----------------------------------\ "
 docker-compose up -d
 
 echo -----------------------------------/
@@ -57,9 +61,7 @@ chars="/-\|"
 container_name="connect"
 
 #Set MQTT IP in confluent-config file for connection between Kafka-MQTT
-container_network_name="$( docker inspect -f '{{ .HostConfig.NetworkMode}}' $container_name )"
-stack_gateway="$( docker network inspect -f '{{(index .IPAM.Config 0).Gateway}}' $container_network_name )"
-sed -i 's|tcp://.*|tcp://'$stack_gateway':1883",|' connector-config/nfm-connector.json
+sed -i 's|tcp://.*|tcp://'$ip4':1883",|' connector-config/nfm-connector.json
 
 while [ "$( docker container inspect -f '{{.State.Running}}' $container_name )" == "true" ];
 do
@@ -77,13 +79,17 @@ done
 
 #Display Jupyter Token
 echo -e "\n\n-----------------------------------"
-echo -e "\tJupyter Notebook Token"
+echo -e "${YELLOW}Jupyter Notebook Token${NC}"
+echo -e "-----------------------------------"
 docker exec -it spark-base bash -c 'jupyter notebook list'
-echo "Save The Token"
-echo "If you forgot the token, you can access token by running command\n\tdocker exec -it spark-base bash -c 'jupyter notebook list'"
+echo -e "\nSave The Token"
+echo -e "If you forgot the token, you can access token by running command\n\tdocker exec -it spark-base bash -c 'jupyter notebook list'"
 
 echo -e "\n\n-----------------------------------"
-echo -e "Setup completed.\nYou can start/stop/restart the bigdata-framework now by the heading to folder project and using command : 
+echo -e "Setup completed."
+echo -e "-----------------------------------"
+
+echo -e "You can start/stop/restart the bigdata-framework now by the heading to folder project and using command : 
 \tdocker-compose start
 \tdocker-compose kill
 \tdocker-compose restart "
