@@ -182,15 +182,15 @@ Project Link: [https://github.com/fajarryuk4/bigdata-framework-docker](https://g
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/fajarryuk4/repo.svg?style=for-the-badge
-[contributors-url]: https://github.com/fajarryuk4/repo/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/fajarryuk4/repo.svg?style=for-the-badge
-[forks-url]: https://github.com/fajarryuk4/repo/network/members
-[stars-shield]: https://img.shields.io/github/stars/fajarryuk4/repo.svg?style=for-the-badge
-[stars-url]: https://github.com/fajarryuk4/repo/stargazers
-[issues-shield]: https://img.shields.io/github/issues/fajarryuk4/repo.svg?style=for-the-badge
-[issues-url]: https://github.com/fajarryuk4/repo/issues
-[license-shield]: https://img.shields.io/github/license/fajarryuk4/repo.svg?style=for-the-badge
-[license-url]: https://github.com/fajarryuk4/repo/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/fajarryuk4/bigdata-framework-docker.svg?style=for-the-badge
+[contributors-url]: https://github.com/fajarryuk4/bigdata-framework-docker/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/fajarryuk4/bigdata-framework-docker.svg?style=for-the-badge
+[forks-url]: https://github.com/fajarryuk4/bigdata-framework-docker/network/members
+[stars-shield]: https://img.shields.io/github/stars/fajarryuk4/bigdata-framework-docker.svg?style=for-the-badge
+[stars-url]: https://github.com/fajarryuk4/bigdata-framework-docker/stargazers
+[issues-shield]: https://img.shields.io/github/issues/fajarryuk4/bigdata-framework-docker.svg?style=for-the-badge
+[issues-url]: https://github.com/fajarryuk4/bigdata-framework-docker/issues
+[license-shield]: https://img.shields.io/github/license/fajarryuk4/bigdata-framework-docker.svg?style=for-the-badge
+[license-url]: https://github.com/fajarryuk4/bigdata-framework-docker/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/fajarmukti18
