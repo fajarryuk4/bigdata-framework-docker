@@ -103,10 +103,6 @@ This is an example of how to list things you need to use the software and how to
   ```sh
   sudo apt-get install mosquitto
   ```
-* Mosquitto Client
-  ```sh
-  sudo apt-get install mosquitto-clients
-  ```
 * Net-Tools
   ```sh
   sudo apt-get install net-Tools
