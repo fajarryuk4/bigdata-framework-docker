@@ -1,5 +1,11 @@
+pyspark
 pymongo
-fastavro
-python-schema-registry-client
 confluent-kafka
+confluent_kafka
+numpy
+pandas
 tinydb
+pyarrow
+Py4J
+matplotlib
+scikit-learn

@@ -94,4 +94,5 @@ echo -e "You can start/stop/restart the bigdata-framework now by the heading to 
 \tdocker-compose kill
 \tdocker-compose restart "
 
-echo -e "For Uninstall run command:\n\tdocker-compose down\nFor install or Re-Install run\n\tsudo bash single-cluster.sh"
+echo -e "For Uninstall run command:\n\tdocker-compose down -v\n"
+echo -e "For Re-Install or Re-build run\n\tdocker-compose up --build"
