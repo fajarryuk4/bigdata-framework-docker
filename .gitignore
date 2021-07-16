@@ -1,4 +1,6 @@
 
-connector-config/nfm-connector.json
+connector-config/
 
-envfile/netflowmeter.env
+envfile/
+
+volume/mongochart/
