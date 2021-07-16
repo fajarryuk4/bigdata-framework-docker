@@ -9,7 +9,7 @@
         "connect.mqtt.keep.alive" : "1000",
         "connect.mqtt.client.id" : "dm_source_id",
         "connect.mqtt.converter.throw.on.error" : "true",
-        "connect.mqtt.hosts" : "tcp://127.0.0.1:1883",
+        "connect.mqtt.hosts" : "tcp://192.168.43.20:1883",
         "connect.mqtt.service.quality" : "1"
     }
 }
